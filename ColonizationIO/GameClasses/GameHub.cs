@@ -8,5 +8,9 @@ namespace ColonizationIO.GameClasses.Hubs
 {
     public class GameHub : Hub
     {
+        public async Task SendMessage(string message)
+        {
+            await Clients.All.SendAsync("ReceiveMessage", message);
+        }
     }
 }
