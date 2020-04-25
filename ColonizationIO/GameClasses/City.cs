@@ -8,11 +8,11 @@ namespace ColonizationIO.GameClasses
 {
     public class City : Building
     {
-        int Population { get; set; }
-        int FoodReserve { get; set; }
-        string GrowthRate { get; set; }
+        public int Population { get; set; }
+        public int FoodReserve { get; set; }
+        public string GrowthRate { get; set; }
 
-        List<Farm> ResourceBuildings;
+        public List<Farm> ResourceBuildings;
 
         public City()
         {

@@ -13,11 +13,31 @@
         create: create
     }
 };
+var game;
+var gameState;
 
-var gameState = new GameState();
-var game = new Phaser.Game(config);
-var scoreText;
 
+//Initialize
+function StartGameInitialization() {
+    //TODO show loading here?
+    CallInitializeGameState();
+}
+function InitializeGame(gs) {
+    gameState = gs;
+    gameState.game = new Phaser.Game(config);
+
+    //TODO move client side functions to a seperate file
+    gameState.GetSelectedTile = function (xPixel, yPixel) {
+        for (var x = 0; x < this.tilesXCount; x++) {
+            for (var y = 0; y < this.tilesYCount; y++) {
+                if ((xPixel >= this.tiles[x][y].xStart && xPixel < this.tiles[x][y].xEnd) &&
+                    (yPixel >= this.tiles[x][y].yStart && yPixel < this.tiles[x][y].yEnd)) {
+                    return this.tiles[x][y];
+                }
+            }
+        }
+    }
+}
 
 function preload() {
     this.load.image('MapMap', 'GameAssets/Images/Map/Map.png');
@@ -49,7 +69,6 @@ function create() {
     gameState.state = this;
     CreateMenu();
     CreateTileHighlighter();
-    StartMainTimer();
 }
 function CreateMenu() {
     gameState.state.physics.add.image(50, 120, 'MenuMenu');
@@ -113,6 +132,9 @@ function OpenCityMenu(pointer) {
 }
 function PlaceBuilding(pointer, BuildingName) {
     var selectedTile = gameState.GetSelectedTile(pointer.upX, pointer.upY);
+    //TODO call server function, pass selected Tile and building name to server
+
+
     if (selectedTile.tileType !== "Water" && selectedTile.buildingReference === null) {
         switch (BuildingName) {
             case "BuildingCity":

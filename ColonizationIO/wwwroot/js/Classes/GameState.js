@@ -1,4 +1,4 @@
-﻿class GameState {
+﻿class GameStateOld {
     constructor() {
         this.state = null;
         this.menu = null;

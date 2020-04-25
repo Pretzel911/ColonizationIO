@@ -11,13 +11,12 @@ namespace ColonizationIO.GameClasses
         //map
         //menu
         //state
-        List<Building> Buildings;
-        List<List<Tile>> Tiles;
-
-        int TilesXCount { get; set; }
-        int TilesYCount { get; set; }
-        int TilesWidth { get; set; }
-        int TilesHeight { get; set; }
+        public List<Building> Buildings { get; set; }
+        public List<List<Tile>> Tiles { get; set; }
+        public int TilesXCount { get; set; }
+        public int TilesYCount { get; set; }
+        public int TilesWidth { get; set; }
+        public int TilesHeight { get; set; }
         public GameState()
         {
             TilesXCount = 32;
@@ -38,10 +37,10 @@ namespace ColonizationIO.GameClasses
             Tiles = new List<List<Tile>>();
             for (int x = 0; x < TilesXCount; x++)
             {
-                Tiles[x] = new List<Tile>();
+                Tiles.Add(new List<Tile>());
                 for (int y = 0; y < TilesYCount; y++)
                 {
-                    Tiles[x][y] = new Tile();
+                    Tiles[x].Add(new Tile());
                     Tiles[x][y].xIndex = x;
                     Tiles[x][y].yIndex = y;
                     Tiles[x][y].xStart = x * TilesWidth;
