@@ -13,12 +13,15 @@ namespace ColonizationIO.GameClasses
         //state
         public List<Building> Buildings { get; set; }
         public List<List<Tile>> Tiles { get; set; }
+        public List<Player> Players { get; set; }
         public int TilesXCount { get; set; }
         public int TilesYCount { get; set; }
         public int TilesWidth { get; set; }
         public int TilesHeight { get; set; }
         public GameState()
         {
+            Buildings = new List<Building>();
+            Players = new List<Player>();
             TilesXCount = 32;
             TilesYCount = 36;
             TilesWidth = 60;

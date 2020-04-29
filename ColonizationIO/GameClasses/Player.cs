@@ -8,6 +8,7 @@ namespace ColonizationIO.GameClasses
     public class Player
     {
         public string Name { get; set; }
+        public string ClientID { get; set; }
         public int MaxCities { get; set; }
         public List<Building> Buildings;
 

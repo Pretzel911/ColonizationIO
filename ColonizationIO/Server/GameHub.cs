@@ -15,13 +15,27 @@ namespace ColonizationIO.Server
         }
         public async Task InitializeGameState()
         {
-            var gs = new GameState();
+            GameState gs;
+            if(GameServer.GameStates.Count>0)
+            {
+                gs = GameServer.GameStates[0];
+            }
+            else
+            {
+                gs = new GameState();
+                GameServer.GameStates.Add(gs);
+            }
+            var player = new Player();
+            player.Name = "Player " + (gs.Players.Count() + 1).ToString();
+            player.ClientID = Context.ConnectionId;
+            GameServer.GameStates[0].Players.Add(player);
             await Clients.Client(Context.ConnectionId).SendAsync("ReceiveGameState", gs);
+            await Clients.Others.SendAsync("AddPlayer", player);
         }
-        public async Task BuildBuilding(string BuildingName, Tile SelectedTile)
+        public async Task BuildBuilding(string BuildingType, Tile SelectedTile)
         {
             //update game state
-            await Clients.All.SendAsync("BuildBuilding", BuildingName, SelectedTile, 1);
+            await Clients.All.SendAsync("BuildBuilding", BuildingType, SelectedTile, 1);
         }
     }
 }
