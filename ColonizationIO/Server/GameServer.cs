@@ -9,5 +9,9 @@ namespace ColonizationIO.Server
     public static class GameServer
     {
         public static List<GameState> GameStates;
+        static GameServer()
+        {
+            GameStates = new List<GameState>();
+        }
     }
 }

@@ -26,14 +26,10 @@ connection.on("ReceiveGameState", function (gamestate) {
     InitializeGame(gamestate)
 });
 connection.on("BuildBuilding", function (buildingType, selectedTile, buildingID) {
-    var bg = new BuildingGraphic();
-    bg.tile = selectedTile;
-    bg.buildingType = buildingType;
-    bg.id = buildingID;
-    bg.graphic = gameState.state.physics.add.image(selectedTile.xMid, selectedTile.yMid, buildingType);
-    gameState.buildingGraphics.push(bg);
+    BuildBuilding(buildingType, selectedTile, buildingID);
 });
 connection.on("AddPlayer", function (player) {
-    console.log(player)
+    console.log(player);
     gameState.players.push(player);
-}
+});
+

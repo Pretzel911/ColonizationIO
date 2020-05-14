@@ -34,6 +34,12 @@ namespace ColonizationIO.Server
         }
         public async Task BuildBuilding(string BuildingType, Tile SelectedTile)
         {
+            var gs=GameServer.GameStates.Where(x=>x.Players.Where(x=>x.ClientID==Context.ConnectionId).FirstOrDefault() !=null).FirstOrDefault();
+            var building = new Building() { 
+                BuildingType = BuildingType,
+                Name = "Utopia",
+                Tile = SelectedTile };
+            gs.Buildings.Add(building);
             //update game state
             await Clients.All.SendAsync("BuildBuilding", BuildingType, SelectedTile, 1);
         }

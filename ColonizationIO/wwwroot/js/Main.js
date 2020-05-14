@@ -39,6 +39,12 @@ function InitializeGame(gs) {
         }
     }
 }
+function SynchronizeGameState() {
+    console.log(gameState);
+    gameState.buildings.forEach(function (value) {
+        BuildBuilding(value.buildingType,value.tile,value.buildingID)
+    });
+}
 
 function preload() {
     this.load.image('MapMap', 'GameAssets/Images/Map/Map.png');
@@ -70,6 +76,7 @@ function create() {
     gameState.state = this;
     CreateMenu();
     CreateTileHighlighter();
+    SynchronizeGameState();
 }
 function CreateMenu() {
     gameState.state.physics.add.image(50, 120, 'MenuMenu');
