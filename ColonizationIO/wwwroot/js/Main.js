@@ -26,7 +26,7 @@ function InitializeGame(gs) {
     gameState = gs;
     gameState.game = new Phaser.Game(config);
     gameState.buildingGraphics = new Array();
-
+    gameState.cityMenu = new Menu();
     //TODO move client side functions to a seperate file
     gameState.GetSelectedTile = function (xPixel, yPixel) {
         for (var x = 0; x < this.tilesXCount; x++) {
@@ -120,17 +120,18 @@ function CreateTileHighlighter() {
     });    
 }
 function OpenCityMenu(pointer) {
+    console.log(pointer);
     var selectedTile = gameState.GetSelectedTile(pointer.upX, pointer.upY);
-    if (gameState.CityMenu.open)
+    if (gameState.cityMenu.open)
     {
-        gameState.CityMenu.destroyMenu();
+        gameState.cityMenu.destroyMenu();
     }
     if (selectedTile.buildingReference !== null && selectedTile.buildingReference.buildingType === "BuildingCity")
     {
         var tempMenu = new Menu();
         tempMenu.graphic = gameState.state.physics.add.image(pointer.upX + 110, pointer.upY + 80, 'MenuCity');
         tempMenu.open = true;
-        gameState.CityMenu = tempMenu;
+        gameState.cityMenu = tempMenu;
         //items to add
         tempMenu.addMenuItemText(tempMenu.graphic.x - 80, tempMenu.graphic.y - 90, 'Name:' + selectedTile.buildingReference.name, gameState.state);
         tempMenu.addMenuItemText(tempMenu.graphic.x - 80, tempMenu.graphic.y - 70, 'Pop:' + selectedTile.buildingReference.population, gameState.state);
@@ -140,47 +141,7 @@ function OpenCityMenu(pointer) {
 }
 function PlaceBuilding(pointer, BuildingName) {
     var selectedTile = gameState.GetSelectedTile(pointer.upX, pointer.upY);
-    //gameState.state.physics.add.image(selectedTile.xMid, selectedTile.yMid, "BuildingCity");
-    //TODO call server function, pass selected Tile and building name to server
     connection.invoke("BuildBuilding", "BuildingCity", selectedTile);
-
-    //if (selectedTile.tileType !== "Water" && selectedTile.buildingReference === null) {
-    //    switch (BuildingName) {
-    //        case "BuildingCity":
-    //            console.log(gameState.CheckCityExists());
-    //            if (!gameState.CheckCityExists()) {
-    //                selectedTile.building = BuildingName;
-    //                var tempCity = new City();
-    //                tempCity.name = "Populi";
-    //                tempCity.buildingType = BuildingName;
-    //                tempCity.population = 500;
-    //                tempCity.foodReserve = 1000;
-    //                tempCity.graphic = gameState.state.physics.add.image(selectedTile.xMid(), selectedTile.yMid(), BuildingName);
-    //                tempCity.tile = selectedTile;
-    //                gameState.buildings.push(tempCity);
-    //                selectedTile.buildingReference = tempCity;
-    //            }
-    //            break;
-    //        case "BuildingFarm":
-    //            var tempBuilding = new Farm();
-    //            tempBuilding.name = BuildingName;
-    //            tempBuilding.buildingType = BuildingName;
-    //            tempBuilding.tile = selectedTile;
-    //            tempBuilding.city = gameState.GetBuildingCity(tempBuilding);
-    //            if (tempBuilding.city !== null) { //no city no building!
-    //                tempBuilding.graphic = gameState.state.physics.add.image(selectedTile.xMid(), selectedTile.yMid(), BuildingName);
-    //                gameState.buildings.push(tempBuilding);
-    //                tempBuilding.city.resourceBuildings.push(tempBuilding);
-    //                selectedTile.buildingReference = tempBuilding;
-    //            }
-    //            else {
-    //                //hey uhh, you can't build a farm without a city numbnuts
-    //            }
-    //            break;
-    //        case "BuildingRoad":
-    //            break;
-    //    }
-    //}
 }
 //Main Timer
 var mainTimer;
