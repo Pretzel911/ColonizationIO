@@ -9,6 +9,11 @@ namespace ColonizationIO.Server
 {
     public class GameHub : Hub
     {
+        Microsoft.AspNetCore.Hosting.IWebHostEnvironment _webHostEnvironment;
+        public GameHub(Microsoft.AspNetCore.Hosting.IWebHostEnvironment webHostEnvironment)
+        {
+            _webHostEnvironment = webHostEnvironment;
+        }
         public async Task SendMessage(string message)
         {
             await Clients.All.SendAsync("ReceiveMessage", message);
@@ -22,7 +27,7 @@ namespace ColonizationIO.Server
             }
             else
             {
-                gs = new GameState();
+                gs = new GameState(_webHostEnvironment);
                 GameServer.GameStates.Add(gs);
             }
             var player = new Player();

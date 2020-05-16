@@ -1,0 +1,54 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<Resources>
+  <Resource>
+    <ID>1</ID>
+    <Name>Grain</Name>
+    <Type>Basic</Type>
+  </Resource>
+  <Resource>
+    <ID>2</ID>
+    <Name>Timber</Name>
+    <Type>Basic</Type>
+  </Resource>
+  <Resource>
+    <ID>3</ID>
+    <Name>Iron</Name>
+    <Type>Basic</Type>
+  </Resource>
+  <Resource>
+    <ID>4</ID>
+    <Name>Coal</Name>
+    <Type>Basic</Type>
+  </Resource>
+  <Resource>
+    <ID>5</ID>
+    <Name>Cotton</Name>
+    <Type>Basic</Type>
+  </Resource>
+  <Resource>
+    <ID>6</ID>
+    <Name>Tobacco</Name>
+    <Type>Basic</Type>
+  </Resource>
+  <Resource>
+    <ID>7</ID>
+    <Name>Clothing</Name>
+    <Type>Manufactured</Type>
+  </Resource>
+  <Resource>
+    <ID>8</ID>
+    <Name>Furniture</Name>
+    <Type>Manufactured</Type>
+  </Resource>
+  <Resource>
+    <ID>9</ID>
+    <Name>Tools</Name>
+    <Type>Manufactured</Type>
+  </Resource>
+  <Resource>
+    <ID>10</ID>
+    <Name>Bread</Name>
+    <Type>Manufactured</Type>
+  </Resource>
+</Resources>
+
