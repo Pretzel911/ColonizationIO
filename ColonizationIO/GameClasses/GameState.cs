@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Hosting;
+﻿using ColonizationIO.Server;
+using Microsoft.AspNetCore.Hosting;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,6 +13,7 @@ namespace ColonizationIO.GameClasses
     public class GameState
     {
         private IWebHostEnvironment webHostEnvironment;
+        private GameHub GameHub { get; set; }
         public List<Building> Buildings { get; set; }
         public List<List<Tile>> Tiles { get; set; }
         public List<Player> Players { get; set; }

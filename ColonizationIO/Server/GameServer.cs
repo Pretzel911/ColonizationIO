@@ -2,16 +2,37 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.SignalR;
+using Microsoft.AspNet.SignalR.Infrastructure;
 
 namespace ColonizationIO.Server
 {
-    public static class GameServer
+    public class GameServerService
     {
-        public static List<GameState> GameStates;
-        static GameServer()
+        private readonly System.Timers.Timer TickTimer = new System.Timers.Timer();
+        private IHubContext<GameHub> HubContext { get; set; }
+        public List<GameState> GameStates { get; set; }
+        public ConnectionManager ConnectionManager {get;set;}
+        GameServerService(IHubContext<GameHub> hubContext)
         {
+            HubContext = hubContext;
             GameStates = new List<GameState>();
+        }
+        public void StartGameServerTick()
+        {
+            TickTimer.Interval = 5000;//5 seconds
+            TickTimer.Elapsed += PerformTicks;
+            TickTimer.Start();
+        }
+        async void PerformTicks(object sender, System.Timers.ElapsedEventArgs e)
+        {
+            foreach (var gs in GameStates)
+            {
+                gs.PerformTick();
+            }
+            await HubContext.Clients.All.SendAsync("ReceiveMessage", "Fucking what?");
         }
     }
 }

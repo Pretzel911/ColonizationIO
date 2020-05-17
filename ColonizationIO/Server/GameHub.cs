@@ -10,10 +10,14 @@ namespace ColonizationIO.Server
     public class GameHub : Hub
     {
         Microsoft.AspNetCore.Hosting.IWebHostEnvironment _webHostEnvironment;
-        public GameHub(Microsoft.AspNetCore.Hosting.IWebHostEnvironment webHostEnvironment)
+        private GameServerService GameServer { get; set; }
+        public GameHub(Microsoft.AspNetCore.Hosting.IWebHostEnvironment webHostEnvironment,GameServerService GameServer)
         {
+            this.GameServer = GameServer;
             _webHostEnvironment = webHostEnvironment;
+            this.GameServer.StartGameServerTick();
         }
+        
         public async Task SendMessage(string message)
         {
             await Clients.All.SendAsync("ReceiveMessage", message);
