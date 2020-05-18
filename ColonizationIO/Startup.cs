@@ -9,6 +9,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using ColonizationIO.Server;
+using Microsoft.AspNetCore.SignalR;
 
 namespace ColonizationIO
 {
@@ -26,7 +27,7 @@ namespace ColonizationIO
         {
             services.AddControllersWithViews();
             services.AddSignalR();
-            services.AddSingleton<GameServerService>();
+            services.AddSingleton<GameServerService>(serviceProvider=>new GameServerService(serviceProvider.GetRequiredService<IHubContext<GameHub>>()));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

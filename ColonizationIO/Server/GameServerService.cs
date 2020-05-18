@@ -5,7 +5,6 @@ using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.SignalR;
-using Microsoft.AspNet.SignalR.Infrastructure;
 
 namespace ColonizationIO.Server
 {
@@ -14,8 +13,7 @@ namespace ColonizationIO.Server
         private readonly System.Timers.Timer TickTimer = new System.Timers.Timer();
         private IHubContext<GameHub> HubContext { get; set; }
         public List<GameState> GameStates { get; set; }
-        public ConnectionManager ConnectionManager {get;set;}
-        GameServerService(IHubContext<GameHub> hubContext)
+        public GameServerService(IHubContext<GameHub> hubContext)
         {
             HubContext = hubContext;
             GameStates = new List<GameState>();
