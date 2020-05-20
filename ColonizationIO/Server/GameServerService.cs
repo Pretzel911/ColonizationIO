@@ -17,6 +17,7 @@ namespace ColonizationIO.Server
         {
             HubContext = hubContext;
             GameStates = new List<GameState>();
+            StartGameServerTick();
         }
         public void StartGameServerTick()
         {

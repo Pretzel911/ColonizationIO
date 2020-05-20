@@ -42,7 +42,7 @@ function preload() {
 function create() {
     gameManager.phaserGame.map = this.add.sprite(960, 540, 'MapMap').setInteractive();
     gameManager.phaserState = this;
-    console.log("phasered?");
     CreateMenu();
     CreateTileHighlighter();
+    gameManager.SynchronizeGameState();
 }

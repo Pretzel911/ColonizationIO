@@ -44,22 +44,22 @@ function CreateTileHighlighter() {
     });    
 }
 function OpenCityMenu(pointer) {
-    console.log(pointer);
     var selectedTile = gameManager.GetSelectedTile(pointer.upX, pointer.upY);
-    if (gameState.cityMenu.open)
+    var selectedBuilding = gameManager.GetTileBuilding(selectedTile);
+    if (gameManager.clientGameState.cityMenu.open)
     {
-        gameState.cityMenu.destroyMenu();
+        gameManager.clientGameState.cityMenu.destroyMenu();
     }
-    if (selectedTile.buildingReference !== null && selectedTile.buildingReference.buildingType === "BuildingCity")
+    if (selectedBuilding !== null && selectedBuilding.buildingType === "BuildingCity")
     {
         var tempMenu = new Menu();
         tempMenu.graphic = gameManager.phaserState.physics.add.image(pointer.upX + 110, pointer.upY + 80, 'MenuCity');
         tempMenu.open = true;
-        gameState.cityMenu = tempMenu;
+        gameManager.clientGameState.cityMenu = tempMenu;
         //items to add
-        tempMenu.addMenuItemText(tempMenu.graphic.x - 80, tempMenu.graphic.y - 90, 'Name:' + selectedTile.buildingReference.name, gameManager.phaserState);
-        tempMenu.addMenuItemText(tempMenu.graphic.x - 80, tempMenu.graphic.y - 70, 'Pop:' + selectedTile.buildingReference.population, gameManager.phaserState);
-        tempMenu.addMenuItemText(tempMenu.graphic.x - 80, tempMenu.graphic.y - 50, 'Food:' + selectedTile.buildingReference.foodReserve, gameManager.phaserState);
+        tempMenu.addMenuItemText(tempMenu.graphic.x - 80, tempMenu.graphic.y - 90, 'Name:' + selectedBuilding.name, gameManager.phaserState);
+        tempMenu.addMenuItemText(tempMenu.graphic.x - 80, tempMenu.graphic.y - 70, 'Pop:' + "0", gameManager.phaserState);
+        tempMenu.addMenuItemText(tempMenu.graphic.x - 80, tempMenu.graphic.y - 50, 'Food:' + "0", gameManager.phaserState);
     }
     //menuBuilding.disableBody(true, true);
 }

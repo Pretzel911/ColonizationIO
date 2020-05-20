@@ -15,7 +15,6 @@ namespace ColonizationIO.Server
         {
             this.GameServer = GameServer;
             _webHostEnvironment = webHostEnvironment;
-            this.GameServer.StartGameServerTick();
         }
         
         public async Task SendMessage(string message)

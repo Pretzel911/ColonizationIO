@@ -13,7 +13,6 @@
     InitializeGameState(gs) {//TODO better name for this?
         this.phaserGame = new Phaser.Game(config);
         this.serverGameState = gs;
-        //this.serverGameState.game = new Phaser.Game(config);
         this.clientGameState.buildingGraphics = new Array();
         this.clientGameState.cityMenu = new Menu();
         //TODO move client side functions to a seperate file
@@ -27,17 +26,24 @@
                     }
                 }
             }
-        }
+        };
+        this.GetTileBuilding = function (tile) {
+            var sGS = this.serverGameState;
+            for (var x = 0; x < sGS.buildings.length; x++) {
+                if (sGS.buildings[x].tile.x === tile.x && sGS.buildings[x].tile.y === tile.y) {
+                    return sGS.buildings[x];
+                }
+            }
+        };
+    }
+    SynchronizeGameState() {
+        this.serverGameState.buildings.forEach(function (value) {
+            BuildBuilding(value.buildingType, value.tile, value.buildingID)
+        });
     }
 }
 
 //Initialize
-function SynchronizeGameState() {
-    console.log(gameState);
-    gameState.buildings.forEach(function (value) {
-        BuildBuilding(value.buildingType, value.tile, value.buildingID)
-    });
-}
 function BuildBuilding(buildingType, selectedTile, buildingID) {
     var bg = new BuildingGraphic();
     bg.tile = selectedTile;
