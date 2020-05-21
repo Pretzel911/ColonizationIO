@@ -22,6 +22,7 @@ namespace ColonizationIO.GameClasses
         public int TilesWidth { get; set; }
         public int TilesHeight { get; set; }
         public List<Resource> Resources { get; set; }
+        public List<PopGroup> PopGroups { get; set; }
         public GameState(IWebHostEnvironment webHostEnvironment)
         {
             this.webHostEnvironment = webHostEnvironment;
@@ -72,6 +73,7 @@ namespace ColonizationIO.GameClasses
         public void LoadGameData()
         {
             LoadResources();
+            LoadPopGroups();
         }
         public void LoadResources()
         {
@@ -79,6 +81,13 @@ namespace ColonizationIO.GameClasses
             XmlReader reader = XmlReader.Create(webHostEnvironment.WebRootPath+@"\GameAssets\DataFiles\Resources.xml");
             var list = (ResourceList)Xser.Deserialize(reader);
             Resources = list.Resources;
+        }
+        public void LoadPopGroups()
+        {
+            XmlSerializer Xser = new XmlSerializer(typeof(PopGroupList));
+            XmlReader reader = XmlReader.Create(webHostEnvironment.WebRootPath + @"\GameAssets\DataFiles\PopGroups.xml");
+            var list = (PopGroupList)Xser.Deserialize(reader);
+            PopGroups = list.PopGroups;
         }
         public bool CheckCityExists()
         {

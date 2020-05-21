@@ -42,7 +42,7 @@ class GameHub {
 
         })
         this.connection.on("BuildBuilding", function (buildingType, selectedTile, buildingID) {
-            BuildBuilding(buildingType, selectedTile, buildingID);
+            gameManager.BuildCity(buildingType, selectedTile, buildingID);
         });
         this.connection.on("AddPlayer", function (player) {
             console.log(player);
