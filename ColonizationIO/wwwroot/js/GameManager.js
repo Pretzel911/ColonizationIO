@@ -15,12 +15,21 @@
         this.phaserGame = new Phaser.Game(config);
         this.serverGameState = gs;
     }
+    InitializeAfterPhaserCreate() {
+        this.InitializeCityPlacement();
+        this.SynchronizeGameState();
+    }
     SynchronizeGameState() {
         this.serverGameState.buildings.forEach(function (value) {
             gameManager.BuildCity(value.buildingType, value.tile, value.buildingID)
         });
     }
 
+    //Communication Functions
+    PlaceBuilding(pointer) {
+        var selectedTile = this.GetSelectedTile(pointer.upX, pointer.upY);
+        this.gameHub.CallPlaceBuilding("BuildingCity", selectedTile)
+    }
     
     //Game Action Functions
     BuildCity(buildingType, selectedTile, buildingID) {
@@ -29,9 +38,25 @@
         bg.buildingType = buildingType;
         bg.id = buildingID;
         bg.graphic = this.phaserState.physics.add.image(selectedTile.xMid, selectedTile.yMid, buildingType);
+        bg.labelGraphic = this.phaserState.add.text(selectedTile.xMid, selectedTile.yMid+20, "Name", { fontFamily: '"Times New Roman", Times, serif',  fontSize: '20px', fill: '#000' });
+        bg.labelGraphic.setOrigin(0.5);
         this.clientGameState.buildingGraphics.push(bg);
     }
     //UI Functions
+    InitializeCityPlacement() {
+        this.clientGameState.PlaceYourCityText = this.phaserState.add.text(this.phaserGame.config.width / 2,
+            this.phaserGame.config.height / 2,
+            "Place Your City...",
+            { fontFamily: '"Times New Roman", Times, serif', fontSize: '50px', fill: '#000000', backgroundColor:'#aaaaaa' });
+        this.clientGameState.PlaceYourCityText.setOrigin(0.5);
+        this.clientGameState.PlaceYourCityText.setAlpha(0.8);
+        this.clientGameState.PlaceYourCityText
+        this.CreateTileHighlighter();
+        gameManager.phaserGame.map.on('pointerup', function (pointer) {
+            gameManager.PlaceBuilding(pointer);
+            gameManager.phaserGame.map.off('pointerup');
+        });
+    }
     CreateTileHighlighter() {
         var graphics = this.phaserState.add.graphics({ lineStyle: { width: 2, color: 0xffffff } });
         var rect = new Phaser.Geom.Rectangle();
@@ -48,35 +73,6 @@
         });
     }
     //Menu Functions
-    CreateMenu() {
-        this.phaserState.physics.add.image(50, 120, 'MenuMenu');
-        this.CreateMenuItem(50, 50, 'BuildingCity');
-        this.CreateMenuItem(50, 90, 'BuildingFarm');
-        this.CreateMenuItem(50, 130, 'BuildingRoadLeftRight');
-        this.CreateMenuItemClear(50, 170);
-    }
-    CreateMenuItem(x, y, type) {
-        var menuBuilding = this.phaserState.physics.add.image(x, y, type).setInteractive();
-        menuBuilding.on('pointerup', function (pointer) {
-            gameManager.phaserGame.map.off('pointerup');
-            gameManager.phaserGame.map.on('pointerup', function (pointer) {
-                gameManager.PlaceBuilding(pointer, type);
-            });
-        });
-    }
-    PlaceBuilding(pointer, BuildingName) {
-        var selectedTile = this.GetSelectedTile(pointer.upX, pointer.upY);
-        this.gameHub.CallPlaceBuilding("BuildingCity", selectedTile)
-    }
-    CreateMenuItemClear(x, y) {
-        var menuBuilding = this.phaserState.physics.add.image(x, y, "MenuX").setInteractive();
-        menuBuilding.on('pointerup', function (pointer) {
-            this.phaserGame.map.off('pointerup');
-            this.phaserGame.map.on('pointerup', function (pointer) {
-                OpenCityMenu(pointer);
-            });
-        });
-    }
     OpenCityMenu(pointer) {
         var selectedTile = this.GetSelectedTile(pointer.upX, pointer.upY);
         var selectedBuilding = this.GetTileBuilding(selectedTile);

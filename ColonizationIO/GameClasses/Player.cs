@@ -14,7 +14,6 @@ namespace ColonizationIO.GameClasses
 
         public Player()
         {
-            Name = "Player1";
             MaxCities = 1;
         }
     }

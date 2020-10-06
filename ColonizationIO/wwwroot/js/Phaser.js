@@ -42,7 +42,6 @@ function preload() {
 function create() {
     gameManager.phaserGame.map = this.add.sprite(960, 540, 'MapMap').setInteractive();
     gameManager.phaserState = this;
-    gameManager.CreateMenu();
-    gameManager.CreateTileHighlighter();
+    gameManager.InitializeAfterPhaserCreate();
     gameManager.SynchronizeGameState();
 }

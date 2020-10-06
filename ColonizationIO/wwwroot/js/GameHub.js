@@ -33,7 +33,7 @@ class GameHub {
     //From Server
     declareServerEvents() {
         this.connection.on("ReceiveMessage", function (message) {
-            console.log("Message from other clients:" + message);
+            console.log("Message from server:" + message);
         });
         this.connection.on("ReceiveGameState", function (gamestate) {
             gameManager.InitializeGameState(gamestate);
