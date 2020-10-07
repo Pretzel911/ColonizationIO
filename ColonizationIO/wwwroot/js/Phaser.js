@@ -2,6 +2,8 @@
     type: Phaser.AUTO,
     width: 1920,
     height: 1080,
+    parent: 'divPhaser',
+    dom: { createContainer: true },
     physics: {
         default: 'arcade',
         arcade: {
@@ -10,7 +12,8 @@
     },
     scene: {
         preload: preload,
-        create: create
+        create: create,
+        update: update
     }
 };
 
@@ -44,4 +47,7 @@ function create() {
     gameManager.phaserState = this;
     gameManager.InitializeAfterPhaserCreate();
     gameManager.SynchronizeGameState();
+}
+function update(time, delta) {
+    
 }

@@ -16,6 +16,7 @@
         this.serverGameState = gs;
     }
     InitializeAfterPhaserCreate() {
+        this.CreateTileHighlighter();
         this.InitializeCityPlacement();
         this.SynchronizeGameState();
     }
@@ -26,7 +27,7 @@
     }
 
     //Communication Functions
-    PlaceBuilding(pointer) {
+    PlaceCity(pointer) {
         var selectedTile = this.GetSelectedTile(pointer.upX, pointer.upY);
         this.gameHub.CallPlaceBuilding("BuildingCity", selectedTile)
     }
@@ -44,16 +45,21 @@
     }
     //UI Functions
     InitializeCityPlacement() {
-        this.clientGameState.PlaceYourCityText = this.phaserState.add.text(this.phaserGame.config.width / 2,
+        var PlaceYourCityText = this.phaserState.add.text(this.phaserGame.config.width / 2,
             this.phaserGame.config.height / 2,
             "Place Your City...",
             { fontFamily: '"Times New Roman", Times, serif', fontSize: '50px', fill: '#000000', backgroundColor:'#aaaaaa' });
-        this.clientGameState.PlaceYourCityText.setOrigin(0.5);
-        this.clientGameState.PlaceYourCityText.setAlpha(0.8);
-        this.clientGameState.PlaceYourCityText
-        this.CreateTileHighlighter();
+        PlaceYourCityText.setOrigin(0.5);
+        //this.clientGameState.PlaceYourCityText.setAlpha(0.8);
+        var tween = this.phaserState.tweens.add({
+            targets: PlaceYourCityText,
+            alpha: 0,
+            duration: 2000,
+            ease: "Linear",
+            delay: 5000
+        }, this.phaserState);
         gameManager.phaserGame.map.on('pointerup', function (pointer) {
-            gameManager.PlaceBuilding(pointer);
+            gameManager.PlaceCity(pointer);
             gameManager.phaserGame.map.off('pointerup');
         });
     }

@@ -7,7 +7,12 @@
 <html>
 <head>
     <script src="https://cdn.jsdelivr.net/npm/phaser@3.15.1/dist/phaser-arcade-physics.min.js"></script>
+    @*<link href="~/css/bootstrap.min.css" rel="stylesheet" />*@
     <title>Colonization.io</title>
+    <link  href="~/css/site.css" rel="stylesheet" />
+    <link href="~/css/Bootstrap/bootstrap.css" rel="stylesheet" />
+    <script src="~/js/_Web/jquery-3.5.1.min.js"></script>
+    <script src="~/js/_Web/_Bootstrap/bootstrap.js"></script>
     <script src="~/js/signalr/dist/browser/signalr.js"></script>
     <script src="~/js/Classes/Menu.js"></script>
     <script src="~/js/Classes/BuildingGraphic.js"></script>
@@ -22,5 +27,24 @@
     <script>
         var gameManager = new GameManager();
     </script>
+    <div id="divPhaser">
+
+    </div>
+    <div id="divNameCity" class="container alert alert-primary">
+        <div class="row">
+            <div class="col-12 mb-3">
+                <label for="inpCityName">City Name: </label>
+                <input class="form-control" id="inpCityName" />
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-6">
+
+            </div>
+            <div class="col-6">
+                <button id="btnCityNameSubmit" class="btn btn-success">Submit</button>
+            </div>
+        </div>
+    </div>
 </body>
 </html>

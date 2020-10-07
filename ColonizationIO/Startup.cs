@@ -28,6 +28,7 @@ namespace ColonizationIO
             services.AddControllersWithViews();
             services.AddSignalR();
             services.AddSingleton<GameServerService>(serviceProvider=>new GameServerService(serviceProvider.GetRequiredService<IHubContext<GameHub>>()));
+            services.AddControllersWithViews().AddRazorRuntimeCompilation();//this allows the cshtml to update during runtime https://stackoverflow.com/questions/53639969/net-core-mvc-page-not-refreshing-after-changes/57637903#57637903
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
