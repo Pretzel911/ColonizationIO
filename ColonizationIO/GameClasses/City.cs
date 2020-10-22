@@ -16,6 +16,7 @@ namespace ColonizationIO.GameClasses
 
         public City()
         {
+            ID = GetNextID();
             BuildingType = "BuildingCity";
             Population = 0;
             FoodReserve = 0;
@@ -30,7 +31,7 @@ namespace ColonizationIO.GameClasses
             FoodReserve = 0;
             GrowthRate = "standard";
         }
-        public void PerformTick()
+        public override void PerformTick()
         {
             CollectResources();
             PerformPopulationGrowth();

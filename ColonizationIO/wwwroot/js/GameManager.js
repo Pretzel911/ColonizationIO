@@ -43,6 +43,9 @@
         bg.labelGraphic.setOrigin(0.5);
         this.clientGameState.buildingGraphics.push(bg);
     }
+    NameCity(oldCityName, newCityName) {
+
+    }
     //UI Functions
     InitializeCityPlacement() {
         var PlaceYourCityText = this.phaserState.add.text(this.phaserGame.config.width / 2,

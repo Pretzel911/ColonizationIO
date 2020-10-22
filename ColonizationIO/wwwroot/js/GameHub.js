@@ -14,21 +14,21 @@ class GameHub {
     }
     //To Server
     SendMessage(message) {
-        this.connection.invoke("SendMessage", message).catch(function (err) {
-            console.log("Call Failed: " + err.toString());
-        });
+        this.connection.invoke("SendMessage", message).catch(this.LogErrorOnCall);
     }
     CallInitializeGameState() {
-        this.connection.invoke("InitializeGameState").catch(function (err) {
-            console.log("Call Failed: " + err.toString());
-        });
+        this.connection.invoke("InitializeGameState").catch(this.LogErrorOnCall);
     }
     CallPlaceBuilding(buildingType, selectedTile) {
-        this.connection.invoke("BuildBuilding", buildingType, selectedTile).catch(function (err) {
-            console.log("Call Failed: " + err.toString());
-        });
+        this.connection.invoke("BuildBuilding", buildingType, selectedTile).catch(this.LogErrorOnCall);
+    }
+    CallNameCity(oldCityName, newCityName) {
+        this.connection.invoke("NameCity", oldCityName, newCityName).catch(this.LogErrorOnCall);
     }
 
+    LogErrorOnCall(err) {
+        console.log("Call Failed: " + err.toString());
+    }
 
     //From Server
     declareServerEvents() {
@@ -43,6 +43,9 @@ class GameHub {
         })
         this.connection.on("BuildBuilding", function (buildingType, selectedTile, buildingID) {
             gameManager.BuildCity(buildingType, selectedTile, buildingID);
+        });
+        this.connection.on("NameCity", function (oldCityName, newCityName) {
+
         });
         this.connection.on("AddPlayer", function (player) {
             console.log(player);

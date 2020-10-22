@@ -30,19 +30,19 @@
     <div id="divPhaser">
 
     </div>
-    <div id="divNameCity" class="container alert alert-primary">
-        <div class="row">
-            <div class="col-12 mb-3">
-                <label for="inpCityName">City Name: </label>
-                <input class="form-control" id="inpCityName" />
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-6">
-
-            </div>
-            <div class="col-6">
-                <button id="btnCityNameSubmit" class="btn btn-success">Submit</button>
+    <div class="modal fade" id="modalCityName" tabindex="-1" role="dialog" data-backdrop="static" data-keyboard="false">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="modalTitle">Enter City Name</h5>
+                </div>
+                <div class="modal-body">
+                    <label for="inpCityName">City Name: </label>
+                    <input class="form-control" id="inpCityName" />
+                </div>
+                <div class="modal-footer">
+                    <button id="btnCityNameSubmit" class="btn btn-success">Submit</button>
+                </div>
             </div>
         </div>
     </div>

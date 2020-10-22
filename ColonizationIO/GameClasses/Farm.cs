@@ -22,7 +22,7 @@ namespace ColonizationIO.GameClasses
             FoodReserve = 0;
             FoodProduction = 0;
         }
-        public void PerformTick()
+        public override void PerformTick()
         {
             ProduceFood();
         }
