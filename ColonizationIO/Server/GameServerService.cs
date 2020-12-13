@@ -30,8 +30,8 @@ namespace ColonizationIO.Server
             foreach (var gs in GameStates)
             {
                 gs.PerformTick();
+                await HubContext.Clients.All.SendAsync("RefreshGameStateAfterTick", gs);
             }
-            await HubContext.Clients.All.SendAsync("ReceiveMessage", "Fucking what?");
         }
     }
 }

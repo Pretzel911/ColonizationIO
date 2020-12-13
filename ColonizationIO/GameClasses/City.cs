@@ -33,8 +33,8 @@ namespace ColonizationIO.GameClasses
         }
         public override void PerformTick()
         {
-            CollectResources();
-            PerformPopulationGrowth();
+            //CollectResources();
+            //PerformPopulationGrowth();
         }
         public void CollectResources()
         {

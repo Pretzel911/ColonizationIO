@@ -22,29 +22,63 @@
     }
     SynchronizeGameState() {
         this.serverGameState.buildings.forEach(function (value) {
-            gameManager.BuildCity(value.buildingType, value.tile, value.buildingID)
+            gameManager.BuildCity(value)
         });
+    }
+    //Tick Functions
+    RefreshGameStateAfterTick(updatedServerGameState) {
+        this.serverGameState = updatedServerGameState;
+        //TODO any client updates, if user has a window open or the screen needs updated after a tick
     }
 
     //Communication Functions
     PlaceCity(pointer) {
         var selectedTile = this.GetSelectedTile(pointer.upX, pointer.upY);
-        this.gameHub.CallPlaceBuilding("BuildingCity", selectedTile)
+        this.gameHub.CallConstructCity("BuildingCity", selectedTile)
     }
     
     //Game Action Functions
-    BuildCity(buildingType, selectedTile, buildingID) {
+    BuildCity(city) {
         var bg = new BuildingGraphic();
-        bg.tile = selectedTile;
-        bg.buildingType = buildingType;
-        bg.id = buildingID;
-        bg.graphic = this.phaserState.physics.add.image(selectedTile.xMid, selectedTile.yMid, buildingType);
-        bg.labelGraphic = this.phaserState.add.text(selectedTile.xMid, selectedTile.yMid+20, "Name", { fontFamily: '"Times New Roman", Times, serif',  fontSize: '20px', fill: '#000' });
+        bg.tile = city.tile;
+        bg.buildingType = city.buildingType;
+        bg.id = city.id;
+        bg.graphic = this.phaserState.physics.add.image(city.tile.xMid, city.tile.yMid, city.buildingType);
+        bg.labelGraphic = this.phaserState.add.text(city.tile.xMid, city.tile.yMid+20, city.name, { fontFamily: '"Times New Roman", Times, serif',  fontSize: '20px', fill: '#000' });
         bg.labelGraphic.setOrigin(0.5);
         this.clientGameState.buildingGraphics.push(bg);
-    }
-    NameCity(oldCityName, newCityName) {
 
+        
+    }
+    OpenNameCityModal(city) {
+        //show modal
+        this.clientGameState.CurrentlySelectedCity = city;
+        console.log("Show dialog in BuildCity")
+        $("#modalCityName").modal('show');
+        $("#modalCityName #inpCityName").val(city.name);
+        $("#modalCityName #btnCityNameSubmit").off()
+        $("#modalCityName #btnCityNameSubmit").click(this.NameCityEvent)
+        setTimeout(function () {
+            $("#modalCityName #inpCityName")[0].select();
+            $("#modalCityName #inpCityName")[0].focus();
+        }, 500);
+    }
+    NameCityEvent() {
+        gameManager.NameCity();
+    }
+    NameCity() {
+        var newCityName = $("#modalCityName #inpCityName").val();
+        this.gameHub.CallNameCity(this.clientGameState.CurrentlySelectedCity,newCityName)
+    }
+    ChangeCityName(city) {
+        console.log(city);
+        console.log(this.clientGameState.buildingGraphics.filter(x => { return x.id === city.id }))
+        var bg = this.clientGameState.buildingGraphics.filter(x => { return x.id === city.id })[0];
+        console.log(bg);
+        console.log(bg.labelGraphic);
+        bg.labelGraphic.destroy();
+        bg.labelGraphic = this.phaserState.add.text(city.tile.xMid, city.tile.yMid + 20, city.name, { fontFamily: '"Times New Roman", Times, serif', fontSize: '20px', fill: '#000' });
+        bg.labelGraphic.setOrigin(0.5);
     }
     //UI Functions
     InitializeCityPlacement() {

@@ -46,7 +46,6 @@ function create() {
     gameManager.phaserGame.map = this.add.sprite(960, 540, 'MapMap').setInteractive();
     gameManager.phaserState = this;
     gameManager.InitializeAfterPhaserCreate();
-    gameManager.SynchronizeGameState();
 }
 function update(time, delta) {
     

@@ -40,7 +40,7 @@ namespace ColonizationIO.Server
             await Clients.Client(Context.ConnectionId).SendAsync("ReceiveGameState", gs);
             await Clients.Others.SendAsync("AddPlayer", player);
         }
-        public async Task BuildBuilding(string BuildingType, Tile SelectedTile)
+        public async Task ConstructCity(string BuildingType, Tile SelectedTile)
         {
             var gs=GameServer.GameStates.Where(x=>x.Players.Where(x=>x.ClientID==Context.ConnectionId).FirstOrDefault() !=null).FirstOrDefault();
             var building = new City() { 
@@ -49,11 +49,15 @@ namespace ColonizationIO.Server
                 Tile = SelectedTile };
             gs.Buildings.Add(building);
             //update game state
-            await Clients.All.SendAsync("BuildBuilding", BuildingType, SelectedTile, 1);//TODO well this doesn't really work
+            await Clients.All.SendAsync("PlaceCity", building);//TODO well this doesn't really work
+            await Clients.Caller.SendAsync("TriggerClientNameCity", building);
         }
-        public async Task NameCity(string OldName, string NewName)
+        public async void NameCity(City inCity, string NewName)
         {
-
+            var gs = GameServer.GameStates.Where(x => x.Players.Where(x => x.ClientID == Context.ConnectionId).FirstOrDefault() != null).FirstOrDefault();
+            var city = gs.Buildings.Where(x => x.ID == inCity.ID).FirstOrDefault();
+            city.Name = NewName;
+            await Clients.All.SendAsync("NameCity", city);
         }
     }
 }
